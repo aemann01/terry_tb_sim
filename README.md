@@ -1,4 +1,4 @@
-## This repository details mock community simulation analyses performed in Austin et al. /////
+## This repository details mock community simulation analyses performed in *Austin et al.* /////
 
 ## Setup
 
