@@ -20,6 +20,3 @@ To deactivate the environment
 ```bash
 conda deactivate
 ```
-=======
-## This repository details mock community analyses performed in Austin et al. /////
->>>>>>> 5ea9fbcd1fbfc02c7b0e9e1993825bc1416e7af1
