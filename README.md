@@ -1,1 +1,1 @@
-# terry_tb_sim
+# This repository documents mock community analyses performed in Austin et al. /////
