@@ -1,4 +1,4 @@
-name: austin2020_terry_tb_sim
+name: terry_tb_sim
 channels:
   - defaults
   - bioconda
@@ -6,3 +6,6 @@ channels:
 dependencies:
   - bioconda::gargammel=1.1.2
   - bioconda::bwa=0.7.17
+  - bioconda::adapterremoval=2.3.0
+  - bioconda::vsearch=1.1.3
+  - bioconda::cutadapt=1.9.1

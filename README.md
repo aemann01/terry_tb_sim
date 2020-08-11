@@ -14,7 +14,7 @@ Then create and load the conda environment
 
 ```bash
 conda env create -f environment.yml
-conda activate austin2020_terry_tb_sim
+conda activate terry_tb_sim
 ```
 
 To deactivate the environment
