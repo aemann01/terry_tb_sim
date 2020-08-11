@@ -1,0 +1,8 @@
+name: austin2020_terry_tb_sim
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+dependencies:
+  - bioconda::gargammel=1.1.2
+  - bioconda::bwa=0.7.17
