@@ -1,1 +1,1 @@
-## This repository documents mock community analyses performed in Austin et al. /////
+## This repository details mock community analyses performed in Austin et al. /////
