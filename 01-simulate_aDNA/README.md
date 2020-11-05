@@ -104,19 +104,19 @@ Do the same with the bacterial genomes (@ different read lengths)
 ```bash
 rm sim/endo/TBancestor.fasta
 cp mock_oral/mock_oral.fa sim/endo
-gargammel -n 6000000 --comp 0,0,1 -l 30 -damage 0.03,0.4,0.01,0.3 -o sim/mock_oral_sim sim
+gargammel -n 25000000 --comp 0,0,1 -l 30 -damage 0.03,0.4,0.01,0.3 -o sim/mock_oral_sim sim
 mv sim/mock_*sim*fq.gz samples
 mv samples/mock_oral_sim_s1.fq.gz samples/mock_oral_sim_s1.30bp.fq.gz
 mv samples/mock_oral_sim_s2.fq.gz samples/mock_oral_sim_s2.30bp.fq.gz
-gargammel -n 6000000 --comp 0,0,1 -l 50 -damage 0.03,0.4,0.01,0.3 -o sim/mock_oral_sim sim
+gargammel -n 25000000 --comp 0,0,1 -l 50 -damage 0.03,0.4,0.01,0.3 -o sim/mock_oral_sim sim
 mv sim/mock_*sim*fq.gz samples
 mv samples/mock_oral_sim_s1.fq.gz samples/mock_oral_sim_s1.50bp.fq.gz
 mv samples/mock_oral_sim_s2.fq.gz samples/mock_oral_sim_s2.50bp.fq.gz
-gargammel -n 6000000 --comp 0,0,1 -l 75 -damage 0.03,0.4,0.01,0.3 -o sim/mock_oral_sim sim
+gargammel -n 25000000 --comp 0,0,1 -l 75 -damage 0.03,0.4,0.01,0.3 -o sim/mock_oral_sim sim
 mv sim/mock_*sim*fq.gz samples
 mv samples/mock_oral_sim_s1.fq.gz samples/mock_oral_sim_s1.75bp.fq.gz
 mv samples/mock_oral_sim_s2.fq.gz samples/mock_oral_sim_s2.75bp.fq.gz
-gargammel -n 6000000 --comp 0,0,1 -l 100 -damage 0.03,0.4,0.01,0.3 -o sim/mock_oral_sim sim
+gargammel -n 25000000 --comp 0,0,1 -l 100 -damage 0.03,0.4,0.01,0.3 -o sim/mock_oral_sim sim
 mv sim/mock_*sim*fq.gz samples
 mv samples/mock_oral_sim_s1.fq.gz samples/mock_oral_sim_s1.100bp.fq.gz
 mv samples/mock_oral_sim_s2.fq.gz samples/mock_oral_sim_s2.100bp.fq.gz
