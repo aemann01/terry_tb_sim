@@ -122,4 +122,4 @@ mv samples/mock_oral_sim_s1.fq.gz samples/mock_oral_sim_s1.100bp.fq.gz
 mv samples/mock_oral_sim_s2.fq.gz samples/mock_oral_sim_s2.100bp.fq.gz
 ```
 
-Now we can move onto the next step of the analysis
+Now we can move onto the next step of the analysis: 02-mock_community_generation
