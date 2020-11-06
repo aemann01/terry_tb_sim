@@ -49,16 +49,12 @@ cd ..
 rm -r adapterremoval
 ```
 
-
-
 ## Dataset Spiking
 
 Add sequence counts to headers
 
 ```bash
-
-
-
+mv mock_oral_30bp.fa mock_oral_30bp.uniq.fa
 
 sed 's/:.*//' mock_euks.trim.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp.mock
 mv temp.mock mock_euks.trim.fa
