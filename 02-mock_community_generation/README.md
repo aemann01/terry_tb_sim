@@ -7,75 +7,49 @@ Allison E. Mann (2020)
 Create working folders
 
 ```bash
-mkdir adapterremoval examples samples
-```
-
-## Data Downloading
-
-```bash
-wget -i euk.ids
-wget -i examples.ids
-wget -i bac.ids
+mkdir adapterremoval spiked_in
 ```
 
 ## Read Adapter Removal, Merging and Quality Filtering
 
-Adapter removal, quality filter, merge reads of synthetic dataset.
+Adapter removal, quality filter, merge reads.
 
 ```bash
-AdapterRemoval --file1 ../03-synthetic_dataset_generation/sim/wheat_sim_s1.fq.gz --file2 ../03-synthetic_dataset_generation/sim/wheat_sim_s2.fq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename mock_wheat --minlength 25 &
-AdapterRemoval --file1 ../03-synthetic_dataset_generation/sim/mock_euks_sim_s1.fq.gz --file2 ../03-synthetic_dataset_generation/sim/mock_euks_sim_s2.fq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename mock_euks --minlength 25 &
-AdapterRemoval --file1 ../03-synthetic_dataset_generation/sim/mock_oral_sim_s1.fq.gz --file2 ../03-synthetic_dataset_generation/sim/mock_oral_sim_s2.fq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename mock_oral --minlength 25
-```
+cd adapterremoval
+AdapterRemoval --file1 ../../01-simulate_aDNA/sim/tb_sim_30bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/tb_sim_30bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_30bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/sim/tb_sim_50bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/tb_sim_50bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_50bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/sim/tb_sim_75bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/tb_sim_75bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_75bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/sim/tb_sim_100bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/tb_sim_100bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_100bp
 
-For real samples, we first have to determine the adapter sequence
-
-```bash
-AdapterRemoval --identify-adapters --file1 examples/ELSIDRON1L7_lTACTG_rCTCGA_R1.fastq.gz --file2 examples/ELSIDRON1L7_lTACTG_rCTCGA_R2.fastq.gz
-AdapterRemoval --identify-adapters --file1 examples/JAE016.A0101_R1_humfilt.fastq.gz --file2 examples/JAE016.A0101_R2_humfilt.fastq.gz
-AdapterRemoval --identify-adapters --file1 examples/H10b_calc_shotgun_R1.fastq.gz --file2 examples/H10b_calc_shotgun_R2.fastq.gz
-```
-
-Remove adapters, merge and quality filter
-
-```bash
-ls examples/*R1* | sed 's/_R1.fastq.gz//' | sed 's/examples\///' | parallel 'AdapterRemoval --file1 examples/{}_R1.fastq.gz --file2 examples/{}_R2.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename {} --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT'
-mv *gz *settings adapterremoval
-rm -r sim
+# bacterial taxa
+AdapterRemoval --file1 ../../01-simulate_aDNA/sim/mock_oral_30bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/mock_oral_sim_30bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename mock_oral_30bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/sim/mock_oral_sim_50bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/mock_oral_sim_50bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename mock_oral_50bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/sim/mock_oral_sim_75bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/mock_oral_sim_75bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename mock_oral_75bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/sim/mock_oral_sim_100bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/mock_oral_sim_100bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename mock_oral_100bp
 ```
 
 ## Dereplication
 
-Now we can clean up the output from AdapterRemoval
-
 ```bash
 #keeping collapsed, singletons, and high qualtiy forward reads
-ls adapterremoval/*pair1*gz | parallel 'gzip -d {}' &
-ls adapterremoval/*singleton*gz | parallel 'gzip -d {}' &
-ls adapterremoval/*collapsed*gz | parallel 'gzip -d {}' 
-cd adapterremoval
-ls | grep -v "gz" | grep -v "settings" | parallel 'fastq_to_fasta -i {} -o {}.fna'
-ls *.collapsed.fna | sed 's/.collapsed.fna//' | while read line; do cat $line.collapsed.fna $line.collapsed.truncated.fna $line.pair1.fna $line.pair1.truncated.fna $line.singletons.fna $line.singletons.truncated.fna > $line.fa; done 
+ls *pair1*gz | parallel 'gzip -d {}' &
+ls *singleton*gz | parallel 'gzip -d {}' &
+ls *collapsed*gz | parallel 'gzip -d {}' 
+ls | grep -v "gz" | grep -v "settings" | parallel 'fastq_to_fasta -i {} -o {}.fna -Q33 -z'
+ls *.collapsed.fna.gz | sed 's/.collapsed.fna.gz//' | while read line; do cat $line.collapsed.fna.gz $line.collapsed.truncated.fna.gz $line.pair1.fna.gz $line.pair1.truncated.fna.gz $line.singletons.fna.gz $line.singletons.truncated.fna.gz > $line.fa.gz; done 
 rm *fna
-
+ls *fa.gz | parallel 'gzip -d {}'
 ```
-And then remove unnecessary sequencing duplicates
+And then remove unnecessary sequencing duplicates (not 30bp or you'll lose all of your data)
 
 ```bash
-ls *fa | sed 's/.fa//' | parallel 'vsearch --derep_fulllength {}.fa --output ../{}.uniq.fa'
+ls *fa | gzip -d "309bp" | sed 's/.fa//' | parallel 'vsearch --derep_fulllength {}.fa --output ../{}.uniq.fa'
+mv *30bp* ..
 cd ..
 rm -r adapterremoval
-mv *calc* neanderthal.uniq.fa modHuman.uniq.fa samples/
 ```
 
-## Trimming
 
-Now we can ensure there are no poly-A tail sequencing artefacts that can cause
-problems in repetitive regions of genomes.
-
-```bash
-ls *uniq* | sed 's/.uniq.fa//' | while read line; do cutadapt -a "A{100}" -o $line.trim.fa $line.uniq.fa; done
-```
 
 ## Dataset Spiking
 
