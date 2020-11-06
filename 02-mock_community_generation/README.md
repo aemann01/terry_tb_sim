@@ -43,7 +43,7 @@ ls *fa.gz | parallel 'gzip -d {}'
 And then remove unnecessary sequencing duplicates (not 30bp or you'll lose all of your data)
 
 ```bash
-ls *fa | gzip -d "309bp" | sed 's/.fa//' | parallel 'vsearch --derep_fulllength {}.fa --output ../{}.uniq.fa'
+ls *fa | gzip -v "309bp" | sed 's/.fa//' | parallel 'vsearch --derep_fulllength {}.fa --output ../{}.uniq.fa'
 mv *30bp* ..
 cd ..
 rm -r adapterremoval
@@ -53,18 +53,13 @@ rm -r adapterremoval
 
 ## Dataset Spiking
 
-Now we can spike into our synthetic microbial samples, our different synthetic
-eukaryotic aDNA at different levels.
+Add sequence counts to headers
 
 ```bash
-## "Splitting mock Eukaryotes by species"
-rm -r temp
-mkdir temp
-```
 
-First fix headers so you can retrieve after kraken
 
-```bash
+
+
 sed 's/:.*//' mock_euks.trim.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp.mock
 mv temp.mock mock_euks.trim.fa
 sed 's/:.*//' mock_oral.trim.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp.mock
