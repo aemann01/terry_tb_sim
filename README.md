@@ -1,5 +1,7 @@
 ## This repository details mock community simulation analyses performed in *Austin et al.* /////
 
+![workflow](terry_tb_sim/terry_tb_sim_flowchart.pdf)
+
 ## Setup
 
 This repository assumes you are running in a Unix environment (e.g., Mac OSX or Linux) and you have [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) installed.
