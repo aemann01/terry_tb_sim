@@ -104,10 +104,10 @@ Do the same with the bacterial genomes (@ different read lengths). These files a
 ```bash
 rm sim/endo/TBancestor.fasta
 cp mock_oral/mock_oral.fa sim/endo
-gargammel -n 25000000 --comp 0,0,1 -l 30 -damage 0.03,0.4,0.01,0.3 -o /Volumes/histolytica/terry_tb_sim/mock_oral_sim.30bp sim &
-gargammel -n 25000000 --comp 0,0,1 -l 50 -damage 0.03,0.4,0.01,0.3 -o /Volumes/histolytica/terry_tb_sim/mock_oral_sim.50bp sim &
-gargammel -n 25000000 --comp 0,0,1 -l 75 -damage 0.03,0.4,0.01,0.3 -o /Volumes/histolytica/terry_tb_sim/mock_oral_sim.75bp sim &
-gargammel -n 25000000 --comp 0,0,1 -l 100 -damage 0.03,0.4,0.01,0.3 -o /Volumes/histolytica/terry_tb_sim/mock_oral_sim.100bp sim &
+gargammel -n 20100000 --comp 0,0,1 -l 30 -damage 0.03,0.4,0.01,0.3 -o /Volumes/histolytica/terry_tb_sim/mock_oral_sim.30bp sim &
+gargammel -n 20100000 --comp 0,0,1 -l 50 -damage 0.03,0.4,0.01,0.3 -o /Volumes/histolytica/terry_tb_sim/mock_oral_sim.50bp sim &
+gargammel -n 20100000 --comp 0,0,1 -l 75 -damage 0.03,0.4,0.01,0.3 -o /Volumes/histolytica/terry_tb_sim/mock_oral_sim.75bp sim &
+gargammel -n 20100000 --comp 0,0,1 -l 100 -damage 0.03,0.4,0.01,0.3 -o /Volumes/histolytica/terry_tb_sim/mock_oral_sim.100bp sim &
 
 ```
 
