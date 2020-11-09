@@ -16,10 +16,10 @@ Adapter removal, quality filter, merge reads.
 
 ```bash
 cd adapterremoval
-AdapterRemoval --file1 ../../01-simulate_aDNA/sim/tb_sim_30bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/tb_sim_30bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_30bp
-AdapterRemoval --file1 ../../01-simulate_aDNA/sim/tb_sim_50bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/tb_sim_50bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_50bp
-AdapterRemoval --file1 ../../01-simulate_aDNA/sim/tb_sim_75bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/tb_sim_75bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_75bp
-AdapterRemoval --file1 ../../01-simulate_aDNA/sim/tb_sim_100bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/tb_sim_100bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_100bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/samples/tb_sim_30bp_s1.fq.gz --file2 ../../01-simulate_aDNA/samples/tb_sim_30bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_30bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/samples/tb_sim_50bp_s1.fq.gz --file2 ../../01-simulate_aDNA/samples/tb_sim_50bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_50bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/samples/tb_sim_75bp_s1.fq.gz --file2 ../../01-simulate_aDNA/samples/tb_sim_75bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_75bp
+AdapterRemoval --file1 ../../01-simulate_aDNA/samples/tb_sim_100bp_s1.fq.gz --file2 ../../01-simulate_aDNA/samples/tb_sim_100bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename tb_100bp
 
 # bacterial taxa
 AdapterRemoval --file1 ../../01-simulate_aDNA/sim/mock_oral_30bp_s1.fq.gz --file2 ../../01-simulate_aDNA/sim/mock_oral_sim_30bp_s2.fq.gz --trimns --trimqualities --minquality 20 --gzip --collapse --basename mock_oral_30bp
