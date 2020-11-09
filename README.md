@@ -1,6 +1,6 @@
 ## This repository details mock community simulation analyses performed in *Austin et al.* /////
 
-![workflow](img/terry_tb_sim_flowchart.pdf)
+![workflow](terry_tb_sim_flowchart.png)
 
 ## Setup
 
