@@ -86,11 +86,6 @@ cat mock_oral_30bp.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0)
 cat mock_oral_50bp.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19980000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_50bp.01per.fa
  cat mock_oral_75bp.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19980000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_75bp.01per.fa
  cat mock_oral_100bp.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19980000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_100bp.01per.fa
-```
-
-Mock oral files are now generated. Should be: 19800000, 19900000, 19980000
-
-```bash
 grep ">" *oral*per*.fa -c
 ```
 
@@ -112,6 +107,7 @@ cat tb_30bp.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;
 cat tb_50bp.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 20000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_50bp.01per.fa
 cat tb_75bp.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 20000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_75bp.01per.fa
 cat tb_100bp.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 20000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_100bp.01per.fa
+grep ">" *per*fa -c 
 ```
 
 Finally, concatenate appropriate sets
