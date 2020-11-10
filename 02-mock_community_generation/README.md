@@ -54,62 +54,76 @@ rm -r adapterremoval
 
 ## Dataset Spiking
 
-
-
-
-
-
 Add sequence counts to headers
 
 ```bash
 mv mock_oral_30bp.fa mock_oral_30bp.uniq.fa
-
-sed 's/:.*//' mock_euks.trim.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp.mock
-mv temp.mock mock_euks.trim.fa
-sed 's/:.*//' mock_oral.trim.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp.mock
-mv temp.mock mock_oral.trim.fa
-sed 's/:.*//' mock_wheat.trim.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp.mock
-mv temp.mock mock_wheat.trim.fa
+mv tb_30bp.fa tb_30bp.uniq.fa
+sed 's/:.*//' mock_oral_30bp.uniq.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp
+mv temp mock_oral_30bp.uniq.fa
+sed 's/:.*//' mock_oral_50bp.uniq.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp
+mv temp mock_oral_50bp.uniq.fa
+sed 's/:.*//' mock_oral_75bp.uniq.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp
+mv temp mock_oral_75bp.uniq.fa
+sed 's/:.*//' mock_oral_100bp.uniq.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp
+mv temp mock_oral_100bp.uniq.fa
+sed 's/:.*//' tb_30bp.uniq.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp
+mv temp tb_30bp.uniq.fa
+sed 's/:.*//' tb_50bp.uniq.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp
+mv temp tb_50bp.uniq.fa
+sed 's/:.*//' tb_75bp.uniq.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp
+mv temp tb_75bp.uniq.fa
+sed 's/:.*//' tb_100bp.uniq.fa | awk '/>/{print $0=$0"_"(++i)}!/>/' > temp
+mv temp tb_100bp.uniq.fa
 ```
 
-Next split out by species
+Prepare mock oral communities
 
 ```bash
-cat mock_wheat.trim.fa mock_euks.trim.fa > temp.seqs
-mv temp.seqs mock_euks.trim.fa
-awk '{print $2}' euk.rename | parallel 'grep {} -A 1 mock_euks.trim.fa > temp/{}.fa'
-echo "How many dietary reads post quality filter and dereplication?"
-grep ">" temp/*fa -c
+# 19800000 1%
+cat mock_oral_30bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19800000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_30bp.1per.fa
+cat mock_oral_50bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19800000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_50bp.1per.fa
+ cat mock_oral_75bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19800000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_75bp.1per.fa
+cat mock_oral_100bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19800000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_100bp.1per.fa
+# 19900000 0.5%
+cat mock_oral_30bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19900000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_30bp.05per.fa
+cat mock_oral_50bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19900000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_50bp.05per.fa
+
+
+ cat mock_oral_75bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19900000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_75bp.05per.fa
+ cat mock_oral_100bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19900000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_100bp.05per.fa
+ # 19980000 0.1%
+cat mock_oral_30bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19980000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_30bp.01per.fa
+cat mock_oral_50bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19980000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_50bp.01per.fa
+ cat mock_oral_75bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19980000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_75bp.01per.fa
+ cat mock_oral_100bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19980000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_100bp.01per.fa
 ```
 
-Now we can make the mock oral commmunities
+Mock oral files are now generated. Should be: 19800000, 19900000, 19980000
 
 ```bash
-#5k depth
-cat mock_oral.trim.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 4995000 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_5k.fa
-#500 depth
-cat mock_oral.trim.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 4999500 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_500.fa
-#50 depth
-cat mock_oral.trim.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 4999950 | awk '{printf("%s\n%s\n",$1,$2)}' > mock_oral_50.fa
+grep ">" *oral*per*.fa -c
 ```
 
-Mock oral files are now generated. Should be: 4995000, 499500, 4999950
+Prepare TB for spike in
 
 ```bash
-grep ">" *oral*5*.fa -c
+# 200000 1%
+cat tb_30bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 200000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_30bp.1per.fa
+cat tb_50bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 200000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_50bp.1per.fa
+cat tb_75bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 200000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_75bp.1per.fa
+cat tb_100bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 200000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_100bp.1per.fa
+# 100000 0.5%
+cat tb_30bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 100000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_30bp.05per.fa
+cat tb_50bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 100000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_50bp.05per.fa
+cat tb_75bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 100000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_75bp.05per.fa
+cat tb_100bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 100000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_100bp.05per.fa
+# 20000 0.1%
+cat tb_30bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 20000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_30bp.01per.fa
+cat tb_50bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 20000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_50bp.01per.fa
+cat tb_75bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 20000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_75bp.01per.fa
+cat tb_100bp.uniq.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 20000 | awk '{printf("%s\n%s\n",$1,$2)}' > tb_100bp.01per.fa
 ```
-
-Mock Eukaryotic community preparation
-
-```bash
-cd temp
-ls *fa | sed 's/.fa$//' > diet.ids
-#5000 subsample
-cat diet.ids | while read line; do cat $line.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 5000 | awk '{printf("%s\n%s\n",$1,$2)}' > $line.5k.fa; done &
-#500 subsample
-cat diet.ids | while read line; do cat $line.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 500 | awk '{printf("%s\n%s\n",$1,$2)}' > $line.500.fa; done &
-#50 subsample
-cat diet.ids | while read line; do cat $line.fa | awk '/^>/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 50 | awk '{printf("%s\n%s\n",$1,$2)}' > $line.50.fa; done
 
 Finally, concatenate appropriate sets, and assign sample names
 
