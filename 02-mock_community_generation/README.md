@@ -82,6 +82,8 @@ printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.1per.fq /Volume
 printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.05per.fq /Volumes/histolytica/terry_tb_sim/mock_oral_$line\bp.05per.fq > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.05per.fq ; done
 # 0.1 percent
 printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.01per.fq /Volumes/histolytica/terry_tb_sim/mock_oral_$line\bp.01per.fq > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.01per.fq ; done
+cd /Volumes/histolytica/terry_tb_sim/spike
+grep "^@" *fq -c
 ```
 
 ## TO DO: cleanup
