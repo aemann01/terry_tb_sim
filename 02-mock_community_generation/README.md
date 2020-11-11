@@ -69,7 +69,7 @@ ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ {
 # 9950000 0.5%
 ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 9950000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.05per.fq; done
  # 9990000 0.1%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 9950000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.01per.fq; done
+ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 9990000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.01per.fq; done
 grep "^@" *per*fq -c 
 ```
 
