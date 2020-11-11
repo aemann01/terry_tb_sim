@@ -1,5 +1,7 @@
 ## This repository details mock community simulation analyses performed in *Austin et al.* /////
 
+[![DOI](https://zenodo.org/badge/286825746.svg)](https://zenodo.org/badge/latestdoi/286825746)
+
 ![workflow](terry_tb_sim_flowchart.png)
 
 ## Setup
