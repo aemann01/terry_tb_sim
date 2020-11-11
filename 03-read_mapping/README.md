@@ -3,13 +3,14 @@
 First need to index our reference database
 
 ```bash
+cd 03-read_mapping/
 ln ../01-simulate_aDNA/tb_genomes/tb_genomes.fa .
 bwa index tb_genomes.fa
 ```
 
 
 ```bash
-
+ls *fq | while read line; do bwa aln -l 1000 -n 0.1 
 
 
 
