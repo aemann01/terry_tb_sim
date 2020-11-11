@@ -84,6 +84,7 @@ printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.05per.fq /Volum
 printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.01per.fq /Volumes/histolytica/terry_tb_sim/mock_oral_$line\bp.01per.fq > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.01per.fq ; done
 cd /Volumes/histolytica/terry_tb_sim/spike
 grep "^@" *fq -c
+ls *fq | parallel 'gzip {}'
 ```
 
 ## TO DO: cleanup
