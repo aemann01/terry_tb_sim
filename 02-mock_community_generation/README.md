@@ -45,64 +45,43 @@ Add sequence counts to headers
 
 ```bash
 # TB reads
-sed 's/:.*//' tb_30bp.fq | awk '/@/{print $0=$0"_"(++i)}!/@/' > tb_30bp.fq.fix
-sed 's/:.*//' tb_50bp.fq | awk '/@/{print $0=$0"_"(++i)}!/@/' > tb_50bp.fq.fix
-sed 's/:.*//' tb_75bp.fq | awk '/@/{print $0=$0"_"(++i)}!/@/' > tb_75bp.fq.fix
-sed 's/:.*//' tb_100bp.fq | awk '/@/{print $0=$0"_"(++i)}!/@/' > tb_100bp.fq.fix
-# mock oral
-sed 's/:.*//' mock_oral_30bp.fq | awk '/@/{print $0=$0"_"(++i)}!/@/' > mock_oral_30bp.fq.fix &
-sed 's/:.*//' mock_oral_50bp.fq | awk '/@/{print $0=$0"_"(++i)}!/@/' > mock_oral_50bp.fq.fix &
-sed 's/:.*//' mock_oral_75bp.fq | awk '/@/{print $0=$0"_"(++i)}!/@/' > mock_oral_75bp.fq.fix &
-sed 's/:.*//' mock_oral_100bp.fq | awk '/@/{print $0=$0"_"(++i)}!/@/' > mock_oral_100bp.fq.fix
+ls *fq | while read line; do sed 's/:.*//' $line | awk '/@/{print $0=$0"_"(++i)}!/@/' > $line.fix 
 ```
 
 Prepare TB for spike in
 
 ```bash
-# 200000 1%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 200000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.1per.fq; done
-# 100000 0.5%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 100000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.05per.fq; done
-# 20000 0.1%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 20000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.01per.fq; done
+# 100000 1%
+ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 100000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.1per.fq; done
+# 50000 0.5%
+ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 50000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.05per.fq; done
+# 10000 0.1%
+ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 10000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.01per.fq; done
 grep "^@" *per*fq -c 
 ```
-
 
 Prepare mock oral communities
 
 ```bash
 cd /Volumes/histolytica/terry_tb_sim
-# 19800000 1%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19800000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.1per.fq; done
-# 19900000 0.5%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19900000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.05per.fq; done
- # 19980000 0.1%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 19980000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.01per.fq; done
+# 9900000 1%
+ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 9900000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.1per.fq; done
+# 9950000 0.5%
+ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 9950000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.05per.fq; done
+ # 9990000 0.1%
+ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 9950000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.01per.fq; done
 grep "^@" *per*fq -c 
 ```
 
 Finally, concatenate appropriate sets
 
 ```bash
-cd ..
 # 1 percent
-cat adapterremoval/tb_30bp.1per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_30bp.1per.fa > /Volumes/histolytica/terry_tb_sim/spike/30bp.1per.fa &
-cat adapterremoval/tb_50bp.1per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_50bp.1per.fa > /Volumes/histolytica/terry_tb_sim/spike/50bp.1per.fa &
-cat adapterremoval/tb_75bp.1per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_75bp.1per.fa > /Volumes/histolytica/terry_tb_sim/spike/75bp.1per.fa &
-cat adapterremoval/tb_100bp.1per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_100bp.1per.fa > /Volumes/histolytica/terry_tb_sim/spike/100bp.1per.fa &
+printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.1per.fq /Volumes/histolytica/terry_tb_sim/spike/mock_oral_$line\bp.1per.fq > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.1per.fq ; done
 # 0.5 percent
-cat adapterremoval/tb_30bp.05per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_30bp.05per.fa > /Volumes/histolytica/terry_tb_sim/spike/30bp.05per.fa &
-cat adapterremoval/tb_50bp.05per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_50bp.05per.fa > /Volumes/histolytica/terry_tb_sim/spike/50bp.05per.fa &
-cat adapterremoval/tb_75bp.05per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_75bp.05per.fa > /Volumes/histolytica/terry_tb_sim/spike/75bp.05per.fa &
-cat adapterremoval/tb_100bp.05per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_100bp.05per.fa > /Volumes/histolytica/terry_tb_sim/spike/100bp.05per.fa &
+printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.05per.fq /Volumes/histolytica/terry_tb_sim/spike/mock_oral_$line\bp.05per.fq > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.05per.fq ; done
 # 0.1 percent
-cat adapterremoval/tb_30bp.01per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_30bp.01per.fa > /Volumes/histolytica/terry_tb_sim/spike/30bp.01per.fa &
-cat adapterremoval/tb_50bp.01per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_50bp.01per.fa > /Volumes/histolytica/terry_tb_sim/spike/50bp.01per.fa &
-cat adapterremoval/tb_75bp.01per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_75bp.01per.fa > /Volumes/histolytica/terry_tb_sim/spike/75bp.01per.fa &
-cat adapterremoval/tb_100bp.01per.fa /Volumes/histolytica/terry_tb_sim/mock_oral_100bp.01per.fa > /Volumes/histolytica/terry_tb_sim/spike/100bp.01per.fa
+printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.01per.fq /Volumes/histolytica/terry_tb_sim/spike/mock_oral_$line\bp.01per.fq > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.01per.fq ; done
 ```
-
-
 
 ## TO DO: cleanup
