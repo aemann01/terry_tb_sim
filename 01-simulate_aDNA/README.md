@@ -18,7 +18,7 @@ cd 01-simulate_aDNA/mock_oral
 wget -i bac.query -q
 ls *gz | parallel 'gzip -d {}' 
 cd ../tb_genomes
-wget -i tb.query -q 
+wget -i tb.anc.query -q 
 ls *gz | parallel 'gzip -d {}' 
 # only do below if we are also pulling the sra data for reference
 # cat tb.sra.query | xargs -I{} prefetch {}
