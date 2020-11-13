@@ -53,7 +53,7 @@ ls *fq | parallel 'seqtk sample -s339 {} 10000 > {}.01per'
 wc -l *per
 ```
 
-Prepare mock oral communities # NOTE: do not run all at same time, will crash (Allie's) computer
+Prepare mock oral communities # NOTE: running all of these in parallel at once crashes my computer (16G RAM, 8 Cores) so proceed with caution
 
 ```bash
 cd /Volumes/histolytica/terry_tb_sim
