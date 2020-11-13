@@ -41,47 +41,40 @@ ls *bp.fq.gz | parallel 'gzip -d {}'
 
 ## Dataset Spiking
 
-Add sequence counts to headers
-
-```bash
-# TB reads
-ls *fq | while read line; do sed 's/:.*//' $line | awk '/@/{print $0=$0"_"(++i)}!/@/' > $line.fix 
-```
-
 Prepare TB for spike in
 
 ```bash
 # 100000 1%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 100000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.1per.fq; done
+ls *fq | parallel 'seqtk sample -s167 {} 100000 > {}.1per'
 # 50000 0.5%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 50000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.05per.fq; done
+ls *fq | parallel 'seqtk sample -s116 {} 50000 > {}.05per'
 # 10000 0.1%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 10000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.01per.fq; done
-grep "^@" *per*fq -c 
+ls *fq | parallel 'seqtk sample -s339 {} 10000 > {}.01per'
+wc -l *per
 ```
 
-Prepare mock oral communities
+Prepare mock oral communities # NOTE: do not run all at same time, will crash (Allie's) computer
 
 ```bash
 cd /Volumes/histolytica/terry_tb_sim
 # 9900000 1%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 9900000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.1per.fq; done
+ls *fq | parallel 'seqtk sample -s320 {} 9900000 > {}.1per'
 # 9950000 0.5%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 9950000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.05per.fq; done
+ls *fq | parallel 'seqtk sample -s469 {} 9950000 > {}.05per'
  # 9990000 0.1%
-ls *fix | sed 's/.fq.fix//' | while read line; do cat $line.fq.fix | awk '/^@/ { if(i>0) printf("\n"); i++; printf("%s\t",$0); next;} {printf("%s",$0);} END { printf("\n");}' | shuf | head -n 9990000 | awk '{printf("%s\n%s\n",$1,$2)}' | sed 's/+/\n+\n/' > $line.01per.fq; done
-grep "^@" *per*fq -c 
+ls *fq | parallel 'seqtk sample -67 {} 9990000 > {}.01per'
+wc -l *per
 ```
 
 Finally, concatenate appropriate sets
 
 ```bash
 # 1 percent
-printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.1per.fq /Volumes/histolytica/terry_tb_sim/mock_oral_$line\bp.1per.fq > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.1per.fq ; done
+printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.fq.1per /Volumes/histolytica/terry_tb_sim/mock_oral_$line\bp.fq.1per > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.1per.fq ; done
 # 0.5 percent
-printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.05per.fq /Volumes/histolytica/terry_tb_sim/mock_oral_$line\bp.05per.fq > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.05per.fq ; done
+printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.fq.05per /Volumes/histolytica/terry_tb_sim/mock_oral_$line\bp.fq.05per > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.05per.fq ; done
 # 0.1 percent
-printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.01per.fq /Volumes/histolytica/terry_tb_sim/mock_oral_$line\bp.01per.fq > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.01per.fq ; done
+printf "30\n50\n75\n100\n" | while read line; do cat tb_$line\bp.fq.01per /Volumes/histolytica/terry_tb_sim/mock_oral_$line\bp.fq.01per > /Volumes/histolytica/terry_tb_sim/spike/$line\bp.01per.fq ; done
 cd /Volumes/histolytica/terry_tb_sim/spike
 grep "^@" *fq -c
 ls *fq | parallel 'gzip {}'
