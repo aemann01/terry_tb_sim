@@ -62,7 +62,7 @@ ls *fq | parallel 'seqtk sample -s320 {} 9900000 > {}.1per'
 # 9950000 0.5%
 ls *fq | parallel 'seqtk sample -s469 {} 9950000 > {}.05per'
  # 9990000 0.1%
-ls *fq | parallel 'seqtk sample -67 {} 9990000 > {}.01per'
+ls *fq | parallel 'seqtk sample -s67 {} 9990000 > {}.01per'
 wc -l *per
 ```
 
