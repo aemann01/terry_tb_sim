@@ -18,7 +18,7 @@ Convert sai to sam, sort
 
 ```bash
 ls *sai | sed 's/.sai//' | while read line; do bwa samse tb_genomes.fa $line.sai $line.fq.gz > $line.sam; done
-ls *sam | sed 's/.sam//' | while read line; do samtools view -bSu $line.sam | samtools sort - $line.sort.sam; done
+ls *sam | sed 's/.sam//' | while read line; do samtools view -bSu $line.sam | samtools sort - > $line.sort.sam; done
 ```
 
 Convert to bam, filter by mapping quality score (>30)
