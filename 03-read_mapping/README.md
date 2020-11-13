@@ -24,8 +24,9 @@ ls *sam | sed 's/.sam//' | while read line; do samtools view -bSu $line.sam | sa
 Convert to bam, filter by mapping quality score (>30)
 
 ```bash
-ls *sam | sed 's/.sam//' | while read line; do samtools view -bS $line.sam > $line.bam; done
+ls *.sort.sam | sed 's/.sort.sam//' | while read line; do samtools view -bS $line.sort.sam > $line.bam; done
 ls *.bam | sed 's/.bam//' | while read line; do samtools view -h -q 30 $line.bam > $line.filt.bam; done
+rm *sam
 ```
 
 Convert to bed file, pull stats
