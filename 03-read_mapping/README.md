@@ -35,4 +35,5 @@ Convert to bed file, pull stats
 mkdir results
 ls *filt.bam | sed 's/.filt.bam//' | parallel 'bedtools bamtobed -i {}.filt.bam > results/{}.bed'
 cd results
+awk -F"\t" '{print $1, "\t", $4}' 30bp.01per.bed | sed 's/:.*//' | sort | uniq -c | sed 's/^[ \t]*//g' | sed 's/ /\t/g' # do for each file
 ```
