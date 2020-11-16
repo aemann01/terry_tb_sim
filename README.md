@@ -1,4 +1,6 @@
-## This repository details mock community simulation analyses performed in *Austin et al.* /////
+## terry_tb_sim
+
+This repository details mock community simulation analyses performed in Austin *et al.* /////
 
 [![DOI](https://zenodo.org/badge/286825746.svg)](https://zenodo.org/badge/latestdoi/286825746)
 
