@@ -1,8 +1,14 @@
-## This repository details mock community simulation analyses performed in *Austin et al.* /////
+## terry_tb_sim
+
+This repository details mock community simulation analyses performed in Austin *et al.* /////
+
+[![DOI](https://zenodo.org/badge/286825746.svg)](https://zenodo.org/badge/latestdoi/286825746)
+
+![workflow](terry_tb_sim_flowchart.png)
 
 ## Setup
 
-This repository assumes you are running in a Unix environment (e.g., Mac OSX or Linux) and you have (https://docs.conda.io/projects/conda/en/latest/user-guide/install/)[conda] installed.
+This repository assumes you are running in a Unix environment (e.g., Mac OSX or Linux) and you have [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) installed.
 
 To get this repository:
 
